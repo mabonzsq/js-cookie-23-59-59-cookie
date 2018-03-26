@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>js操作cookie有效期至当天晚上23点59分59秒的cookie</title>
+</head>
+<body>
+	<script type="text/javascript">
+		<script type="text/javascript"> 
+			
+			var splash = "";
+			
+			//获取cookie
+			function getCookie(c_name) {
+				if (document.cookie.length > 0) {
+					c_start = document.cookie.indexOf(c_name + "=")
+					if (c_start != -1) {
+						c_start = c_start + c_name.length + 1
+						c_end = document.cookie.indexOf(";", c_start)
+						if (c_end == -1) c_end = document.cookie.length
+			            //        document.write(document.cookie.substring(c_start,c_end)+"");
+			        return unescape(document.cookie.substring(c_start, c_end))
+			    }
+			}
+			return ""
+			}
+		 c_cookie=document.cookie.indexOf("username3=");
+	if(getCookie("ddd") =="")
+		{
+		//当cookie不存在 执行这里，并且设置cookie
+
+		splash = setCookie("ddd","123","/");
+		}
+			else{
+				//当cookie存在，执行这里
+			}
+			function setCookie (c_name, value) {
+				var curDate = new Date();
+
+
+   				 // curDate.setTime(curDate.getTime()+5*60*1000);//时间为5分钟后过期
+
+
+			    //当前时间戳  
+			    var curTamp = curDate.getTime();
+
+			    // var timebay = DateTime.Now.AddMinutes(5)
+			    //当日凌晨的时间戳,减去一毫秒是为了防止后续得到的时间不会达到00:00:00的状态  
+			    var curWeeHours = new Date(curDate.toLocaleDateString()).getTime() - 1;
+
+			    //当日已经过去的时间（毫秒）  
+			    var passedTamp = curTamp - curWeeHours;
+
+			    //当日剩余时间  
+			    var leftTamp = 24 * 60 * 60 * 1000 - passedTamp;
+			    var leftTime = new Date();
+			    leftTime.setTime(leftTamp + curTamp);
+			    //创建cookie  
+			    document.cookie = c_name + "=" + escape(value) + ";expires=" + leftTime.toGMTString()+";path="+"/";
+			}
+</script> 			
+	</script>
+</body>
+</html>
